@@ -1,13 +1,17 @@
 import { Locator, Page } from "@playwright/test"
 
 export class CheckoutPage {
-    private readonly page: Page;
     readonly itemCartLocator: Locator
     readonly pageTitleLocator: Locator
-    constructor(page: Page) {
-        this.page = page;
+    readonly totalPriceLocator: Locator
+    constructor(private readonly page: Page) {
         this.itemCartLocator = this.page.locator('.table tbody tr')
         this.pageTitleLocator = this.page.locator('h2')
+        this.totalPriceLocator = this.page.locator('p[id="total"]')
+    }
+
+    async getTotalPrice(): Promise<string> {
+        return this.totalPriceLocator.innerText()
     }
 
     async getItemsInCart() {
@@ -19,7 +23,7 @@ export class CheckoutPage {
         );
     }
 
-    async clickPayWithCardBtn() {
+    async clickPayWithCardBtn(): Promise<void> {
         await this.page.locator('button', { hasText: "Pay with Card" }).click()
     }
 }

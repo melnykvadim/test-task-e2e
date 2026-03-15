@@ -1,13 +1,11 @@
 import { Page, Locator } from "@playwright/test"
-import { Product } from "../interfaces/product";
+import { IProduct } from "../interfaces/product";
 
 export class ProductsPage {
-    private readonly page: Page;
     readonly productItemLocator: Locator;
     readonly cartlocator: Locator;
     readonly pageTitleLocator: Locator
-    constructor(page: Page) {
-        this.page = page
+    constructor(private readonly page: Page) {
         this.productItemLocator = this.page.locator('.text-center')
         this.cartlocator = this.page.locator('nav button', { hasText: 'Cart' })
         this.pageTitleLocator = this.page.locator('h2')
@@ -21,7 +19,7 @@ export class ProductsPage {
      * Retrieves all product elements from the page and returns an array of Product objects.
      * Each Product contains the name, price (as a number), and its index in the list.
      */
-    async getAllProducts(): Promise<Product[]> {
+    async getAllProducts(): Promise<IProduct[]> {
         const items = await this.productItemLocator.all();
         return Promise.all(
             items.map(async (item, i) => ({
@@ -40,7 +38,7 @@ export class ProductsPage {
      * @param productName - Substring to search for in product names, 
      * @returns Filtered array of products matching the name criteria
      */
-    async filterProductsByName(products: Product[], productName: string) {
+    async filterProductsByName(products: IProduct[], productName: string) {
         return products.filter(p =>
             p.name.toLowerCase().includes(productName.toLowerCase())
         );
@@ -50,7 +48,7 @@ export class ProductsPage {
      * @param products - Array of Product objects to search through
      * @returns  -The Product object with the lowest price
      */
-    async getCheapestProduct(products: Product[]) {
+    async getCheapestProduct(products: IProduct[]) {
         return products.reduce((min, p) =>
             p.price < min.price ? p : min
         );

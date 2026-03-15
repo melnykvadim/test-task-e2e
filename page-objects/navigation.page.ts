@@ -1,10 +1,7 @@
 import { Page } from "@playwright/test";
 
 export class NavigationPage {
-    readonly page: Page;
-    constructor(page: Page) {
-        this.page = page
-    }
+    constructor(private readonly page: Page) { }
 
     async moisturizersPage() {
         await this.page.locator('.btn', { hasText: "Buy moisturizers" }).click()

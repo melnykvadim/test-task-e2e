@@ -1,9 +1,6 @@
 import { Page } from "@playwright/test"
 export class MainScreen {
-    readonly page: Page;
-    constructor(page: Page) {
-        this.page = page
-    }
+    constructor(private readonly page: Page) { }
 
     async getCurrentTemp(): Promise<string> {
         const currentTemp = await this.page.locator("[id='temperature']").textContent()
