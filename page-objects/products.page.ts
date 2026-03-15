@@ -38,7 +38,7 @@ export class ProductsPage {
      * @param productName - Substring to search for in product names, 
      * @returns Filtered array of products matching the name criteria
      */
-    async filterProductsByName(products: IProduct[], productName: string) {
+    async filterProductsByName(products: IProduct[], productName: string): Promise<IProduct[]> {
         return products.filter(p =>
             p.name.toLowerCase().includes(productName.toLowerCase())
         );
@@ -48,13 +48,13 @@ export class ProductsPage {
      * @param products - Array of Product objects to search through
      * @returns  -The Product object with the lowest price
      */
-    async getCheapestProduct(products: IProduct[]) {
+    async getCheapestProduct(products: IProduct[]): Promise<IProduct> {
         return products.reduce((min, p) =>
             p.price < min.price ? p : min
         );
     }
     // This method combines the functionality of getting all products, filtering them by name, and then finding the cheapest product among the filtered results.
-    async getCheapestProductByName(productName: string) {
+    async getCheapestProductByName(productName: string): Promise<IProduct> {
         const allProducts = await this.getAllProducts()
         const filteredProductsByName = await this.filterProductsByName(allProducts, productName)
         return filteredProductsByName.reduce((min, p) =>

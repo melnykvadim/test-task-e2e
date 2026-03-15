@@ -14,7 +14,7 @@ export class CheckoutPage {
         return this.totalPriceLocator.innerText()
     }
 
-    async getItemsInCart() {
+    async getItemsInCart(): Promise<{ name: string; price: number }[]> {
         return this.itemCartLocator.evaluateAll(rows =>
             rows.map(row => ({
                 name: row.querySelectorAll('td')[0].innerText,

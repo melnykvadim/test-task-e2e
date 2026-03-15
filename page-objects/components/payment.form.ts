@@ -15,7 +15,7 @@ export class PaymentForm {
         await this.frame.locator('input[id="cc-csc"]').fill(paymentData.cvc)
     }
 
-    async submitPaymentForm() {
+    async submitPaymentForm(): Promise<void> {
         await this.submitButtonLocator.click()
     }
 
