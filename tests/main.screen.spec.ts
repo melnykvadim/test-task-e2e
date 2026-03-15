@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { validPaymentCardData } from '../test-data/payment.card.data';
 import { PageManager } from '../page-objects/page.manager';
 
 const baseURL = process.env.URL as string;
