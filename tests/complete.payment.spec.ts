@@ -42,10 +42,15 @@ test('user should buy 2 items in moisturizers', async ({ page }) => {
   await pm.onPaymentForm().fillPaymentForm(validPaymentCardData)
   await pm.onPaymentForm().submitPaymentForm()
   expect(await pm.onPaymentForm().getSubmitButtonText()).toBe(`Pay INR ₹${expectedTotalPrice}.00`)
-  await expect(pm.onConfirmationPage().pageTitleLocator).toHaveText('PAYMENT SUCCESS')
-  await expect(pm.onConfirmationPage().confirmationMessagelocator).toHaveText(
-    'Your payment was successful. You should receive a follow-up call from our sales team.'
-  )
+  try {
+    await expect(pm.onConfirmationPage().pageTitleLocator).toHaveText('PAYMENT SUCCESS')
+    await expect(pm.onConfirmationPage().confirmationMessagelocator).toHaveText(
+      'Your payment was successful. You should receive a follow-up call from our sales team.'
+    )
+  } catch (error) {
+    await page.screenshot({ path: 'screenshots/payment-confirmation-error.png' }); // Capture screenshot for debugging
+    throw new Error('Payment confirmation failed'); // Rethrow the error to fail the test
+  }
 
 })
 
@@ -81,11 +86,15 @@ test('user should buy 2 items in sunscreens', async ({ page }) => {
   await pm.onCheckoutPage().clickPayWithCardBtn()
   await pm.onPaymentForm().fillPaymentForm(validPaymentCardData)
   await pm.onPaymentForm().submitPaymentForm()
-
   expect(await pm.onPaymentForm().getSubmitButtonText()).toBe(`Pay INR ₹${expectedTotalPrice}.00`)
-  await expect(pm.onConfirmationPage().pageTitleLocator).toHaveText('PAYMENT SUCCESS')
-  await expect(pm.onConfirmationPage().confirmationMessagelocator).toHaveText(
-    'Your payment was successful. You should receive a follow-up call from our sales team.'
-  )
+  try {
+    await expect(pm.onConfirmationPage().pageTitleLocator).toHaveText('PAYMENT SUCCESS')
+    await expect(pm.onConfirmationPage().confirmationMessagelocator).toHaveText(
+      'Your payment was successful. You should receive a follow-up call from our sales team.'
+    )
+  } catch (error) {
+    await page.screenshot({ path: 'screenshots/payment-confirmation-error.png' });
+    throw new Error('Payment confirmation failed'); // Rethrow the error to fail the test
+  }
 })
 
