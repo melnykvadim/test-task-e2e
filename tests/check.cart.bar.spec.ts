@@ -18,7 +18,7 @@ test('cart is empty', async ({ page }) => {
     await expect(pm.onProductsPage().cartlocator).toHaveText('Cart - Empty')
 })
 
-test('cart has one item', async ({ page }) => {
+test('cart has item(s)', async ({ page }) => {
     const pm = new PageManager(page)
     const cheapestProduct = await pm.onProductsPage().getCheapestProductByName('aloe')
     await pm.onProductsPage().clickAddBtn(cheapestProduct.index)
