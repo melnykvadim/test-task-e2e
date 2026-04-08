@@ -8,7 +8,8 @@ test.beforeEach(async ({ page }) => {
 
 })
 
-test('page has correct title', async ({ page }) => {
+test.only('page has correct title', async ({ page }) => {
+    console.log(baseURL)
     const pm = new PageManager(page)
     await expect(pm.onProductsPage().pageTitleLocator).toHaveText('Moisturizers')
 })
