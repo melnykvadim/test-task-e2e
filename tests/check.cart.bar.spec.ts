@@ -4,12 +4,12 @@ import { PageManager } from '../page-objects/page.manager';
 const baseURL = process.env.URL as string;
 
 test.beforeEach(async ({ page }) => {
+    console.log("baseUrl: " + baseURL)
     await page.goto(baseURL + 'moisturizer');
 
 })
 
 test('page has correct title', async ({ page }) => {
-    console.log("baseUrl: " + baseURL)
     const pm = new PageManager(page)
     await expect(pm.onProductsPage().pageTitleLocator).toHaveText('Moisturizers')
 })
